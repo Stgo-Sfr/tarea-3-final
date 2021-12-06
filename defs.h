@@ -120,6 +120,7 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
+int             pgdir(char* virtual_address);
 
 // swtch.S
 void            swtch(struct context**, struct context*);

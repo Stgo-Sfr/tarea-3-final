@@ -532,3 +532,36 @@ procdump(void)
     cprintf("\n");
   }
 }
+
+int pgdir(char* virtual_address)
+{
+    int physical_address;
+    pde_t *pgdir,*pgtab,*pde;
+
+    struct proc *curproc = myproc();
+    pgdir=curproc->pgdir;
+
+    pde = &pgdir[PDX(virtual_address)];
+    if(*pde & PTE_P){
+    pgtab = (pte_t*)V2P(PTE_ADDR(*pde));
+    }
+    else
+    {
+    cprintf("\n direccion virtual invalida\n");
+    return -1;
+    }
+    cprintf("\n ----------------- \n");
+    cprintf(" directorio de entrada (PDE): %d\n",*pde);
+    cprintf(" PTE_P : %d\n",PTE_P);
+    cprintf("\n ----------------- \n");
+
+    //uva2ka
+    pte_t *pte;
+    pte = &pgtab[PTX(virtual_address)];
+    physical_address=(int)V2P(PTE_ADDR(*pte));
+
+    cprintf(" --direccion fisica-- %d\n",physical_address);
+
+    return 0;
+
+   }

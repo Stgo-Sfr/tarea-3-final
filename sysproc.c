@@ -89,3 +89,11 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+char*
+sys_pgdir(char *s)
+{
+  argstr(0, &s);
+  pgdir(s);
+  return s;
+}
